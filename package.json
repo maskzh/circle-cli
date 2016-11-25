@@ -1,0 +1,21 @@
+{
+  "name": "circleci-cli",
+  "version": "1.0.0",
+  "description": "circle-ci cli",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "circleci-cli": "index.js"
+  },
+  "author": "maskzh",
+  "license": "MIT",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "easy-table": "^1.0.0",
+    "node-fetch": "^1.6.3",
+    "shelljs": "^0.7.5",
+    "yargs": "^6.4.0"
+  }
+}
