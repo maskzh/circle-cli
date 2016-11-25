@@ -26,10 +26,40 @@ function getColorFunc(status) {
   }[status]
 }
 
-
 yargs
+  .command('projects', 'Print projects', function(yargs) {
+    var argv = yargs.reset()
+      .option("v", {
+        alias: "verbose",
+        description: "Show additional information about projects"
+      })
+      .alias("h", "help")
+      .help("h")
+      .argv;
+
+    fetch(API + 'projects' + TOKEN)
+    .then(function(response) { return response.json() })
+    .then(function(data) {
+      data.forEach(function(item) {
+        console.log(item.username + '/' + item.reponame)
+        if (argv.v) {
+          var branches = item.branches
+          var t = new Table
+          Object.keys(branches).forEach(function(branch) {
+            if (branch !== 'dev' && branch !== 'master') return
+            var recent_builds = branches[branch].recent_builds
+            if (!recent_builds) return
+
+            t.cell('Branch', branch)
+            t.cell('Status', getColorFunc(recent_builds[0].status)(recent_builds[0].status))
+            t.newRow()
+          })
+          console.log(t.print())
+        }
+      })
+    })
+  })
   .command('recent-builds', 'recent builds', function(yargs) {
-    console.log(success('正在加载...'));
     fetch(API + 'recent-builds' + TOKEN)
     .then(function(response) { return response.json() })
     .then(function(data) {
