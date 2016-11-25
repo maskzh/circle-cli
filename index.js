@@ -115,7 +115,7 @@ yargs
 
     if (argv.n) {
       if (argv.a) {
-        fetch(API + 'project/' + (argv.t || 'github') + '/' + (argv.u || 'maskzh') + '/' + argv.p + '/' + argv.n + '/artifacts' + TOKEN)
+        fetch(API + 'project/' + (argv.t || VCS_TYPE) + '/' + (argv.u || USERNAME) + '/' + argv.p + '/' + argv.n + '/artifacts' + TOKEN)
         .then(function(response) { return response.json() })
         .then(function(data) {
           data.forEach(function(item) {
@@ -125,7 +125,7 @@ yargs
         return
       }
       if (argv.r) {
-        fetch(API + 'project/' + (argv.t || 'github') + '/' + (argv.u || 'maskzh') + '/' + argv.p + '/' + argv.n + '/retry' + TOKEN, { method: 'post' })
+        fetch(API + 'project/' + (argv.t || VCS_TYPE) + '/' + (argv.u || USERNAME) + '/' + argv.p + '/' + argv.n + '/retry' + TOKEN, { method: 'post' })
         .then(function(response) { return response.json() })
         .then(function(data) {
           console.log(success('retried'))
@@ -133,14 +133,14 @@ yargs
         return
       }
       if (argv.c) {
-        fetch(API + 'project/' + (argv.t || 'github') + '/' + (argv.u || 'maskzh') + '/' + argv.p + '/' + argv.n + '/cancel' + TOKEN, { method: 'post' })
+        fetch(API + 'project/' + (argv.t || VCS_TYPE) + '/' + (argv.u || USERNAME) + '/' + argv.p + '/' + argv.n + '/cancel' + TOKEN, { method: 'post' })
         .then(function(response) { return response.json() })
         .then(function(data) {
           console.log(success('canceled'))
         })
         return
       }
-      fetch(API + 'project/' + (argv.t || 'github') + '/' + (argv.u || 'maskzh') + '/' + argv.p + '/' + argv.n + TOKEN)
+      fetch(API + 'project/' + (argv.t || VCS_TYPE) + '/' + (argv.u || USERNAME) + '/' + argv.p + '/' + argv.n + TOKEN)
       .then(function(response) { return response.json() })
       .then(function(data) {
         var t = new Table
@@ -168,7 +168,7 @@ yargs
       return
     }
 
-    fetch(API + 'project/' + (argv.t || 'github') + '/' + (argv.u || 'maskzh') + '/' + argv.p + TOKEN)
+    fetch(API + 'project/' + (argv.t || VCS_TYPE) + '/' + (argv.u || USERNAME) + '/' + argv.p + TOKEN)
     .then(function(response) { return response.json() })
     .then(function(data) {
       var t = new Table
