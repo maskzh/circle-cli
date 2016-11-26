@@ -1,13 +1,13 @@
 {
-  "name": "circleci-cli",
-  "version": "1.0.0",
+  "name": "circle-cli",
+  "version": "1.0.1",
   "description": "circle-ci cli",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "circleci-cli": "index.js"
+    "circle-cli": "index.js"
   },
   "author": "maskzh",
   "license": "MIT",
