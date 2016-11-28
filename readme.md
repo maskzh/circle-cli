@@ -5,5 +5,13 @@
 npm i circle-cli --save
 ```
 
+## Usage
+```shell
+export CIRCLE_TOKEN='xxx'
+export CIRCLE_VCS_TYPE='github'
+export CIRCLE_USERNAME='maskzh'
+```
+add to `.bashrc` or `.zshrc`
+
 ## Preview
-![](./demo.gif)
+![](./screenshot.png)

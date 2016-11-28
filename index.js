@@ -6,6 +6,9 @@ var fetch = require('node-fetch');
 var Table = require('easy-table');
 
 var API = 'https://circleci.com/api/v1.1/'
+var TOKEN = process.env.CIRCLE_TOKEN
+var VSC_TYPE = process.env.CIRCLE_VSC_TYPE
+var USERNAME = process.env.CIRCLE_USERNAME
 
 var success = color.green.bold;
 var notests = color.yellow.bold;
@@ -37,7 +40,7 @@ yargs
       .help("h")
       .argv;
 
-    fetch(API + 'projects' + TOKEN)
+    fetch(API + 'projects?circle-token=' + TOKEN)
     .then(function(response) { return response.json() })
     .then(function(data) {
       data.forEach(function(item) {
@@ -60,7 +63,7 @@ yargs
     })
   })
   .command('ls', 'recent builds', function(yargs) {
-    fetch(API + 'recent-builds' + TOKEN)
+    fetch(API + 'recent-builds?circle-token=' + TOKEN)
     .then(function(response) { return response.json() })
     .then(function(data) {
       var t = new Table
@@ -115,7 +118,7 @@ yargs
 
     if (argv.n) {
       if (argv.a) {
-        fetch(API + 'project/' + (argv.t || VCS_TYPE) + '/' + (argv.u || USERNAME) + '/' + argv.p + '/' + argv.n + '/artifacts' + TOKEN)
+        fetch(API + 'project/' + (argv.t || VCS_TYPE) + '/' + (argv.u || USERNAME) + '/' + argv.p + '/' + argv.n + '/artifacts?circle-token=' + TOKEN)
         .then(function(response) { return response.json() })
         .then(function(data) {
           data.forEach(function(item) {
@@ -125,7 +128,7 @@ yargs
         return
       }
       if (argv.r) {
-        fetch(API + 'project/' + (argv.t || VCS_TYPE) + '/' + (argv.u || USERNAME) + '/' + argv.p + '/' + argv.n + '/retry' + TOKEN, { method: 'post' })
+        fetch(API + 'project/' + (argv.t || VCS_TYPE) + '/' + (argv.u || USERNAME) + '/' + argv.p + '/' + argv.n + '/retry?circle-token=' + TOKEN, { method: 'post' })
         .then(function(response) { return response.json() })
         .then(function(data) {
           console.log(success(argv.p + ' #' + argv.n + ' retried'))
@@ -133,14 +136,14 @@ yargs
         return
       }
       if (argv.c) {
-        fetch(API + 'project/' + (argv.t || VCS_TYPE) + '/' + (argv.u || USERNAME) + '/' + argv.p + '/' + argv.n + '/cancel' + TOKEN, { method: 'post' })
+        fetch(API + 'project/' + (argv.t || VCS_TYPE) + '/' + (argv.u || USERNAME) + '/' + argv.p + '/' + argv.n + '/cancel?circle-token=' + TOKEN, { method: 'post' })
         .then(function(response) { return response.json() })
         .then(function(data) {
           console.log(success(argv.p + ' #' + argv.n + ' canceled'))
         })
         return
       }
-      fetch(API + 'project/' + (argv.t || VCS_TYPE) + '/' + (argv.u || USERNAME) + '/' + argv.p + '/' + argv.n + TOKEN)
+      fetch(API + 'project/' + (argv.t || VCS_TYPE) + '/' + (argv.u || USERNAME) + '/' + argv.p + '/' + argv.n + '?circle-token=' + TOKEN)
       .then(function(response) { return response.json() })
       .then(function(data) {
         var t = new Table
@@ -168,7 +171,7 @@ yargs
       return
     }
 
-    fetch(API + 'project/' + (argv.t || VCS_TYPE) + '/' + (argv.u || USERNAME) + '/' + argv.p + TOKEN)
+    fetch(API + 'project/' + (argv.t || VCS_TYPE) + '/' + (argv.u || USERNAME) + '/' + argv.p + '?circle-token=' + TOKEN)
     .then(function(response) { return response.json() })
     .then(function(data) {
       var t = new Table
@@ -187,13 +190,13 @@ yargs
     })
   })
   .command('show', 'show recent build', function(yargs) {
-    fetch(API + 'recent-builds' + TOKEN)
+    fetch(API + 'recent-builds?circle-token=' + TOKEN)
     .then(function(response) { return response.json() })
     .then(function(data) {
       var build = data.filter(function(item) {
         return (item.branch === 'dev' || item.branch === 'master')
       })[0]
-      fetch(API + 'project/' + build.vcs_type + '/' + build.username + '/' + build.reponame + '/' + build.build_num + TOKEN)
+      fetch(API + 'project/' + build.vcs_type + '/' + build.username + '/' + build.reponame + '/' + build.build_num + '?circle-token=' + TOKEN)
       .then(function(response) { return response.json() })
       .then(function(data) {
         var t = new Table
@@ -227,7 +230,7 @@ yargs
       var build = data.filter(function(item) {
         return (item.branch === 'dev' || item.branch === 'master')
       })[0]
-      fetch(API + 'project/' + build.vcs_type + '/' + build.username + '/' + build.reponame + '/' + build.build_num + '/artifacts' + TOKEN)
+      fetch(API + 'project/' + build.vcs_type + '/' + build.username + '/' + build.reponame + '/' + build.build_num + '/artifacts?circle-token=' + TOKEN)
       .then(function(response) { return response.json() })
       .then(function(data) {
         data.forEach(function(item) {
@@ -243,7 +246,7 @@ yargs
       var build = data.filter(function(item) {
         return (item.branch === 'dev' || item.branch === 'master')
       })[0]
-      fetch(API + 'project/' + build.vcs_type + '/' + build.username + '/' + build.reponame + '/' + build.build_num + '/retry' + TOKEN, { method: 'post' })
+      fetch(API + 'project/' + build.vcs_type + '/' + build.username + '/' + build.reponame + '/' + build.build_num + '/retry?circle-token=' + TOKEN, { method: 'post' })
       .then(function(response) { return response.json() })
       .then(function(data) {
         console.log(success(build.reponame + ' #' + build.build_num + ' retried'))
@@ -257,7 +260,7 @@ yargs
       var build = data.filter(function(item) {
         return (item.branch === 'dev' || item.branch === 'master')
       })[0]
-      fetch(API + 'project/' + build.vcs_type + '/' + build.username + '/' + build.reponame + '/' + build.build_num + '/cancel' + TOKEN, { method: 'post' })
+      fetch(API + 'project/' + build.vcs_type + '/' + build.username + '/' + build.reponame + '/' + build.build_num + '/cancel?circle-token=' + TOKEN, { method: 'post' })
       .then(function(response) { return response.json() })
       .then(function(data) {
         console.log(success(build.reponame + ' #' + build.build_num + ' canceled'))
