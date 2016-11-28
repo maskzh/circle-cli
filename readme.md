@@ -2,7 +2,7 @@
 
 ## Install
 ```shell
-npm i circle-cli --save
+npm i circle-cli -g
 ```
 
 ## Usage
@@ -12,6 +12,12 @@ export CIRCLE_VCS_TYPE='github'
 export CIRCLE_USERNAME='maskzh'
 ```
 add to `.bashrc` or `.zshrc`
+
+then
+
+```
+circle-cli ls
+```
 
 ## Preview
 ![](./screenshot.png)
