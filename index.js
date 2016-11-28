@@ -76,6 +76,7 @@ yargs
         t.cell('Repo', item.reponame)
         t.cell('Branch', item.branch)
         t.cell('Status', getColorFunc(item.status)(item.status))
+        t.cell('Author', item.author_name)
         t.cell('Commit', item.subject)
         t.newRow()
       })
