@@ -7,7 +7,7 @@ var Table = require('easy-table');
 
 var API = 'https://circleci.com/api/v1.1/'
 var TOKEN = process.env.CIRCLE_TOKEN
-var VSC_TYPE = process.env.CIRCLE_VSC_TYPE
+var VCS_TYPE = process.env.CIRCLE_VCS_TYPE
 var USERNAME = process.env.CIRCLE_USERNAME
 
 var success = color.green.bold;
