@@ -60,6 +60,8 @@ yargs
           console.log(t.print())
         }
       })
+    }).catch(function(err) {
+      console.log(err)
     })
   })
   .command('ls', 'recent builds', function(yargs) {
@@ -79,6 +81,8 @@ yargs
       })
 
       console.log(t.toString())
+    }).catch(function(err) {
+      console.log(err)
     })
   })
   .command('project', 'Show project\'s builds', function(yargs) {
@@ -124,6 +128,8 @@ yargs
           data.forEach(function(item) {
             console.log(running('- ') + success(item.url))
           })
+        }).catch(function(err) {
+          console.log(err)
         })
         return
       }
@@ -132,6 +138,8 @@ yargs
         .then(function(response) { return response.json() })
         .then(function(data) {
           console.log(success(argv.p + ' #' + argv.n + ' retried'))
+        }).catch(function(err) {
+          console.log(err)
         })
         return
       }
@@ -140,6 +148,8 @@ yargs
         .then(function(response) { return response.json() })
         .then(function(data) {
           console.log(success(argv.p + ' #' + argv.n + ' canceled'))
+        }).catch(function(err) {
+          console.log(err)
         })
         return
       }
@@ -167,6 +177,8 @@ yargs
         data.steps.forEach(function(step) {
           console.log(running('- ') + step.name + ' ' + getColorFunc(step.actions[0].status)(step.actions[0].status) + ' ' + failure((step.actions[0].run_time_millis/1000) + 's'))
         })
+      }).catch(function(err) {
+        console.log(err)
       })
       return
     }
@@ -187,6 +199,8 @@ yargs
       })
 
       console.log(t.toString())
+    }).catch(function(err) {
+      console.log(err)
     })
   })
   .command('show', 'show recent build', function(yargs) {
@@ -220,7 +234,11 @@ yargs
         data.steps.forEach(function(step) {
           console.log(running('- ') + step.name + ' ' + getColorFunc(step.actions[0].status)(step.actions[0].status) + ' ' + failure((step.actions[0].run_time_millis/1000) + 's'))
         })
+      }).catch(function(err) {
+        console.log(err)
       })
+    }).catch(function(err) {
+      console.log(err)
     })
   })
   .command('artifacts', 'show recent build artifacts', function(yargs) {
@@ -236,7 +254,11 @@ yargs
         data.forEach(function(item) {
           console.log(running('- ') + success(item.url))
         })
+      }).catch(function(err) {
+        console.log(err)
       })
+    }).catch(function(err) {
+      console.log(err)
     })
   })
   .command('retry', 'retry recent build', function(yargs) {
@@ -250,7 +272,11 @@ yargs
       .then(function(response) { return response.json() })
       .then(function(data) {
         console.log(success(build.reponame + ' #' + build.build_num + ' retried'))
+      }).catch(function(err) {
+        console.log(err)
       })
+    }).catch(function(err) {
+      console.log(err)
     })
   })
   .command('cancel', 'cancel recent build', function(yargs) {
@@ -264,7 +290,11 @@ yargs
       .then(function(response) { return response.json() })
       .then(function(data) {
         console.log(success(build.reponame + ' #' + build.build_num + ' canceled'))
+      }).catch(function(err) {
+        console.log(err)
       })
+    }).catch(function(err) {
+      console.log(err)
     })
   })
 
