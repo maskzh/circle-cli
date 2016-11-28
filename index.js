@@ -59,7 +59,7 @@ yargs
       })
     })
   })
-  .command('recent-builds', 'recent builds', function(yargs) {
+  .command('ls', 'recent builds', function(yargs) {
     fetch(API + 'recent-builds' + TOKEN)
     .then(function(response) { return response.json() })
     .then(function(data) {
@@ -128,7 +128,7 @@ yargs
         fetch(API + 'project/' + (argv.t || VCS_TYPE) + '/' + (argv.u || USERNAME) + '/' + argv.p + '/' + argv.n + '/retry' + TOKEN, { method: 'post' })
         .then(function(response) { return response.json() })
         .then(function(data) {
-          console.log(success('retried'))
+          console.log(success(argv.p + ' #' + argv.n + ' retried'))
         })
         return
       }
@@ -136,7 +136,7 @@ yargs
         fetch(API + 'project/' + (argv.t || VCS_TYPE) + '/' + (argv.u || USERNAME) + '/' + argv.p + '/' + argv.n + '/cancel' + TOKEN, { method: 'post' })
         .then(function(response) { return response.json() })
         .then(function(data) {
-          console.log(success('canceled'))
+          console.log(success(argv.p + ' #' + argv.n + ' canceled'))
         })
         return
       }
@@ -246,7 +246,7 @@ yargs
       fetch(API + 'project/' + build.vcs_type + '/' + build.username + '/' + build.reponame + '/' + build.build_num + '/retry' + TOKEN, { method: 'post' })
       .then(function(response) { return response.json() })
       .then(function(data) {
-        console.log(success('retried'))
+        console.log(success(build.reponame + ' #' + build.build_num + ' retried'))
       })
     })
   })
@@ -260,7 +260,7 @@ yargs
       fetch(API + 'project/' + build.vcs_type + '/' + build.username + '/' + build.reponame + '/' + build.build_num + '/cancel' + TOKEN, { method: 'post' })
       .then(function(response) { return response.json() })
       .then(function(data) {
-        console.log(success('canceled'))
+        console.log(success(build.reponame + ' #' + build.build_num + ' canceled'))
       })
     })
   })
