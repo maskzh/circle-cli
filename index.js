@@ -29,6 +29,8 @@ function getColorFunc(status) {
   }[status]
 }
 
+if (!TOKEN) return console.log('CIRCLE_TOKEN is not set')
+
 yargs
   .command('projects', 'Print projects', function(yargs) {
     var argv = yargs.reset()
