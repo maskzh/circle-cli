@@ -14,7 +14,7 @@ var success = color.green.bold;
 var notests = color.yellow.bold;
 var running = color.cyan.bold;
 var failure = color.red.bold;
-var none = color.black.bold;
+var none = color.white.bold;
 
 function getColorFunc(status) {
   return {
@@ -26,7 +26,7 @@ function getColorFunc(status) {
     'timedout': failure,
     'failure': failure,
     'running': running
-  }[status]
+  }[status] || none
 }
 
 if (!TOKEN) return console.log('CIRCLE_TOKEN is not set')
