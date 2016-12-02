@@ -67,13 +67,34 @@ yargs
     })
   })
   .command('ls', 'recent builds', function(yargs) {
+    var argv = yargs.reset()
+      .option("b", {
+        alias: "branch",
+        description: "branch"
+      })
+      .option("r", {
+        alias: "reponame",
+        description: "reponame"
+      })
+      .alias("h", "help")
+      .help("h")
+      .argv;
+
     fetch(API + 'recent-builds?circle-token=' + TOKEN)
     .then(function(response) { return response.json() })
     .then(function(data) {
       var t = new Table
-      data.filter(function(item) {
-        return (item.branch === 'dev' || item.branch === 'master')
-      }).forEach(function(item) {
+      if (argv.r) {
+        data = data.filter(function(item) {
+          return argv.r.indexOf(item.reponame) !== -1
+        })
+      }
+      if (argv.b) {
+        data = data.filter(function(item) {
+          return argv.b.indexOf(item.branch) !== -1
+        })
+      }
+      data.forEach(function(item) {
         t.cell('#', notests(item.build_num))
         t.cell('Repo', item.reponame)
         t.cell('Branch', item.branch)
@@ -245,7 +266,7 @@ yargs
     })
   })
   .command('artifacts', 'show recent build artifacts', function(yargs) {
-    fetch(API + 'recent-builds' + TOKEN)
+    fetch(API + 'recent-builds?circle-token=' + TOKEN)
     .then(function(response) { return response.json() })
     .then(function(data) {
       var build = data.filter(function(item) {
@@ -265,7 +286,7 @@ yargs
     })
   })
   .command('retry', 'retry recent build', function(yargs) {
-    fetch(API + 'recent-builds' + TOKEN)
+    fetch(API + 'recent-builds?circle-token=' + TOKEN)
     .then(function(response) { return response.json() })
     .then(function(data) {
       var build = data.filter(function(item) {
@@ -283,7 +304,7 @@ yargs
     })
   })
   .command('cancel', 'cancel recent build', function(yargs) {
-    fetch(API + 'recent-builds' + TOKEN)
+    fetch(API + 'recent-builds?circle-token=' + TOKEN)
     .then(function(response) { return response.json() })
     .then(function(data) {
       var build = data.filter(function(item) {
