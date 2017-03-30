@@ -100,6 +100,7 @@ yargs
         t.cell('Branch', item.branch)
         t.cell('Status', getColorFunc(item.status)(item.status))
         t.cell('Author', item.author_name)
+        t.cell('Commit Time', new Date(item.committer_date).toLocaleString())
         t.cell('Commit', item.subject)
         t.newRow()
       })
